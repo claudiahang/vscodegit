@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+    </head>
+    <body>
+        <h1>简单Web留言本</h1>
+        <textarea id="memo" cols="60" rows="6"></textarea><br/>
+        <input type="button" value="新增留言" onclick="saveStorage();"/>
+        <input type="button" value="清空数据" onclick="clearStorage();"/>
+        <input type="button" value="清除最后一个数据" onclick="clearingleStorage();"/>
+        <hr/>
+        <p id="msg"></p>
+        <script type="text/javascipt">
+            function saveStorage(id){
+                var data = document.getElementById(id).value;
+                var time = new Date().toUTCString();
+                localStorage.setItem(time,data);
+                showMsg('msg');
+            }
+            function showMsg(id){
+                var result='<table border="1">';
+                for(var i = 0;i < localStorage.length;i++){
+                    var key = localStorage.key(i);
+                    var value = localStorage.getItem(key);
+                    result + = '<tr><td>'+value+'</td><td>'+key+'</td></tr>';
+                }
+                result + ='</table>';
+                var target = document.getElementById(id);
+                target.innerHTML = result;
+            }
+            showMsg('msg');
+            function clearStorage(){
+                localStorage.clear();
+                showMsg('msg');
+            }
+            function clearingleStorage(){
+                localStorage.removeItem(localStorage.key(localStorage.length-1));
+                showMsg('msg');
+            }
+
+        </script>
+    </body>
+</html>
